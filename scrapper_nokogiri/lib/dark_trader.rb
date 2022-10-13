@@ -6,7 +6,7 @@ page = Nokogiri::HTML(URI.open("https://coinmarketcap.com/all/views/all/"))
 def name(link)
   bourse = []
 
-  link.xpath('/html/body/div[1]/div[1]/div[2]/div/div[1]/div/div[2]/div[3]/div/table/tbody/tr[*]/td[2]/div/a[2]').each do |i| #l'étoile au "tr[]" prend toutes les valeurs de la colonne
+  link.xpath('/html/body/div[1]/div[1]/div[2]/div/div[1]/div/div[2]/div[3]/div/table/tbody/tr/td[2]/div/a[1]').each do |i|
     bourse.push (i.text)
   end
   return bourse
@@ -14,7 +14,7 @@ end
 
 def value(link)
   price = []
-  link.xpath('/html/body/div[1]/div[1]/div[2]/div/div[1]/div/div[2]/div[3]/div/table/tbody/tr[*]/td[5]/div/a/span').each do |j|
+  link.xpath('/html/body/div[1]/div[1]/div[2]/div/div[1]/div/div[2]/div[3]/div/table/tbody/tr/td[5]/div/a/span').each do |j|
     price.push (j.text)
   end
   return price
@@ -28,3 +28,4 @@ def final(link)
 end
 
 puts final(page)
+
