@@ -1,12 +1,30 @@
 require 'nokogiri'
 require 'open-uri'
 
-page = Nokogiri::HTML(open("https://coinmarketcap.com/all/views/all/"))
+page = Nokogiri::HTML(URI.open("https://coinmarketcap.com/all/views/all/"))
 
-def cryptos(crypto_names)
-  names = []
-  crypto_names = page.xpath('/mettre_ici_le_XPath')
-      names = 
+def name(link)
+  bourse = []
+
+  link.xpath('/html/body/div[1]/div[1]/div[2]/div/div[1]/div/div[2]/div[3]/div/table/tbody/tr[*]/td[2]/div/a[2]').each do |i| #l'étoile au "tr[]" prend toutes les valeurs de la colonne
+    bourse.push (i.text)
+  end
+  return bourse
 end
 
+def value(link)
+  price = []
+  link.xpath('/html/body/div[1]/div[1]/div[2]/div/div[1]/div/div[2]/div[3]/div/table/tbody/tr[*]/td[5]/div/a/span').each do |j|
+    price.push (j.text)
+  end
+  return price
+end
 
+def final(link)
+  final_crypto = name(link)
+  final_value = value(link)
+  final = final_crypto.zip(final_value).to_h
+  return final
+end
+
+puts final(page)
